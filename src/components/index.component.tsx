@@ -26,7 +26,7 @@ class Index extends React.Component<IProps, IState> {
   }
 
   public componentDidMount() {
-    BaseService.getAll<Person>("users").then((rp) => {
+    BaseService.getAll<Person>("users/").then((rp) => {
       if (rp.Status) {
         const data = rp.Data;
         const listPersons = new Array<Person>();
@@ -101,7 +101,7 @@ class Index extends React.Component<IProps, IState> {
           <thead>
             <tr>
               {/* <th>No</th> */}
-              <th>ID</th>
+              {/* <th>ID</th> */}
               <th>Name</th>
               <th>Email</th>
               <th>Gender</th>

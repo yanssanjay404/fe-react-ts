@@ -3,7 +3,6 @@ export default class Persons {
     name: string;
     email: string;
     gender: string;
-
     constructor(id: string, name: string, email: string, gender: string) {
         this.id = id;
         this.name = name;

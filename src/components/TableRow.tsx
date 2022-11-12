@@ -4,9 +4,9 @@ import Person from "../models/person";
 import BaseService from "../service/base.service";
 import * as toastr from "toastr";
 
-function Del(Id?: string) {
-  BaseService.delete("/person/del/", {
-    id: Id,
+function Del(id?: string) {
+  BaseService.delete("users/", {
+    id: id,
   }).then((rp) => {
     if (rp.Status) {
       toastr.success("Member saved.");
