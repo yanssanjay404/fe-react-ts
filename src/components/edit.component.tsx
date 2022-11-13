@@ -57,7 +57,7 @@ export default class Edit extends React.Component<IProps, IState> {
         this.setState(nextState);
     }
 
-    
+
     public async componentDidMount() {
         // BaseService.get<Person>('users/', this.props.match.params.id).then((response: any) => {
         //     // if (rp.Status) {
@@ -91,6 +91,7 @@ export default class Edit extends React.Component<IProps, IState> {
                 console.log("result 1", result)
                 try {
                     console.log("oke 1")
+                    this.setState({ person: new Person(result.id, result.name, result.email, result.gender) });
                     return new Response(result);
                 } catch (error) {
                     throw new Error("error 1")
@@ -107,8 +108,8 @@ export default class Edit extends React.Component<IProps, IState> {
 
     private onSave = () => {
 
-        console.log(this.state.person);
-        BaseService.update<Person>("/person/update/", this.props.match.params.id, this.state.person).then(
+        console.log("data person ",this.state.person);
+        BaseService.update<Person>("users/", this.props.match.params.id, this.state.person).then(
             (rp) => {
                 if (rp.Status) {
                     toastr.success('Member saved.');

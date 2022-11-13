@@ -1,43 +1,46 @@
 import React from 'react';
 import * as toastr from 'toastr';
 import Person from '../models/person';
+import Users from '../models/user';
 import BaseService from '../service/base.service';
 import { PersonPage } from './page.form';
- 
 
 
-interface IProps { 
+
+interface IProps {
     history: History;
     //Map properties match
-    match:{ 
+    match: {
         isExact: boolean
         params: {
-            id:string
+            id: string
         },
         path: string,
         url: string,
     }
 }
 interface IState {
-    person: Person
+    person: Users
 }
 
 
-export default class Create extends  React.Component<IProps, IState> {
-    constructor(props:IProps) {
+export default class Create extends React.Component<IProps, IState> {
+    constructor(props: IProps) {
         super(props);
-         
+
         this.state = {
             person: {
+                // id: '',
                 name: '',
                 email: '',
                 gender: '',
+                status: 'active'
             }
         }
         this.onFieldValueChange = this.onFieldValueChange.bind(this);
     }
 
-    private onFieldValueChange(fieldName: string, value: string) { 
+    private onFieldValueChange(fieldName: string, value: string) {
         const nextState = {
             ...this.state,
             person: {
@@ -48,32 +51,52 @@ export default class Create extends  React.Component<IProps, IState> {
 
         this.setState(nextState);
     }
-    private onSave = () => { 
-        BaseService.create<Person>("/person/create", this.state.person).then(
+    private onSave = () => {
+        console.log("coba nih", this.state.person)
+        BaseService.create<Person>("users", this.state.person).then(
             (rp) => {
-                if (rp.Status) {
-                    toastr.success('Member saved.'); 
+                // if (rp.Status) {
+                //     toastr.success('Member saved.');
 
 
+                //     this.setState({
+                //         person: {
+                //             name: '',
+                //             email: '',
+                //             gender: '',
+                //             id: '',
+                //         }
+                //     });
+
+                // } else {
+                //     toastr.error(rp.Messages);
+                //     console.log("Messages: " + rp.Messages);
+                //     console.log("Exception: " + rp.Exception);
+                // }
+
+                try {
+                    console.log("create success1")
+                    toastr.success('Member saved.');
                     this.setState({
                         person: {
+                            // id: '',
                             name: '',
                             email: '',
                             gender: '',
-                            id: '',
+                            status: 'active'
                         }
                     });
-                     
-                } else {
-                    toastr.error(rp.Messages);
+                } catch (error) {
                     console.log("Messages: " + rp.Messages);
                     console.log("Exception: " + rp.Exception);
+                    return new Response("erorr4");
                 }
+
             }
         );
 
-    } 
-     
+    }
+
     render() {
         return (
             <PersonPage
@@ -82,6 +105,6 @@ export default class Create extends  React.Component<IProps, IState> {
                 onSave={this.onSave}
             />
         );
-    }     
-     
+    }
+
 }

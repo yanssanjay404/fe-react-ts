@@ -4,27 +4,36 @@ import Person from "../models/person";
 import BaseService from "../service/base.service";
 import * as toastr from "toastr";
 
-function Del(id?: string) {
-  BaseService.delete("users/", {
-    id: id,
-  }).then((rp) => {
-    if (rp.Status) {
-      toastr.success("Member saved.");
-      window.location.reload();
-    } else {
-      toastr.error(rp.Messages);
-      console.log("Messages: " + rp.Messages);
-      console.log("Exception: " + rp.Exception);
-    }
-  });
-}
-
 interface IProps {
   person: Person;
   index: Number;
 }
 
-const TableRow: React.FunctionComponent<IProps> = (props) => { 
+function Del(id?: string) {
+  BaseService.delete("users/", id).then((rp) => {
+    // if (rp.Status) {
+    //   toastr.success("Member saved.");
+    //   window.location.reload();
+    // } else {
+    //   toastr.error(rp.Messages);
+    //   console.log("Messages: " + rp.Messages);
+    //   console.log("Exception: " + rp.Exception);
+    // }
+    console.log("cari id", id)
+
+    try {
+      toastr.success("Success Delete");
+      window.location.reload();
+    } catch (error) {
+      toastr.error(rp.Messages);
+      console.log("Messages: " + rp.Messages);
+      console.log("Exception: " + rp.Exception);
+    }
+
+  });
+}
+
+const TableRow: React.FunctionComponent<IProps> = (props) => {
   return (
     <tr>
       {/* <td>{props.index}</td> */}

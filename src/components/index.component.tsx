@@ -3,11 +3,14 @@ import TableRow from "./TableRow";
 import Person from "../models/person";
 import BaseService from "../service/base.service";
 import * as toastr from "toastr";
+import axios from "axios";
+import { Link, useParams } from "react-router-dom";
 interface IProps { }
 interface IState {
   listPersons: Array<Person>;
   isReady: Boolean;
   hasError: Boolean;
+  next: string
 }
 
 class Index extends React.Component<IProps, IState> {
@@ -15,6 +18,7 @@ class Index extends React.Component<IProps, IState> {
     listPersons: new Array<Person>(),
     isReady: false,
     hasError: false,
+    next: ''
   };
   constructor(props: IProps) {
     super(props);
@@ -94,6 +98,11 @@ class Index extends React.Component<IProps, IState> {
   };
 
   public render(): React.ReactNode {
+    const params = useParams();
+    const pageNumber = params.pageNumber ? parseInt(params.pageNumber, 10) : 1;
+    let data = axios.get(`/public/v2/users?page=1&per_page=20 `);
+    const hasPrevious = pageNumber > 1;
+    const hasNext = !!this.state.next;
     return (
       <div>
         <h3 className="text-center">Users List</h3>
@@ -112,6 +121,14 @@ class Index extends React.Component<IProps, IState> {
           </thead>
           <tbody>{this.tabRow()}</tbody>
         </table>
+        <div>
+          {hasPrevious && (
+            <Link to={`/users/page/${pageNumber - 1}`}>Previous</Link>
+          )}
+          {hasNext && (
+            <Link to={`/users/page/${pageNumber + 1}`}>Next</Link>
+          )}
+        </div>
       </div>
     );
   }
