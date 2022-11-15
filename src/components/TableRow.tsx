@@ -46,6 +46,11 @@ const TableRow: React.FunctionComponent<IProps> = (props) => {
         </Link>
       </td>
       <td>
+        <Link to={"/detail/" + props.person.id} className="btn btn-success">
+          Detail
+        </Link>
+      </td>
+      <td>
         <button onClick={() => Del(props.person.id)} className="btn btn-danger">
           Delete
         </button>

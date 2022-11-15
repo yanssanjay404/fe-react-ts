@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'toastr/build/toastr.min.css'; 
 import Index from './components/index.component';
 import Edit from './components/edit.component';
+import Detail from './components/detail.component';
 import Create from './components/create.component';
 import Home from './components/home.component';
 
@@ -32,6 +33,7 @@ const App: React.FC = () => {
               <Switch>
                   <Route exact path='/create' component={ Create } />
                   <Route path='/edit/:id' component={ Edit } />
+                  <Route path='/detail/:id' component={ Detail } />
                   <Route path='/index' component={ Index } />
                   <Route path='/' component={ Home } />
               </Switch>
